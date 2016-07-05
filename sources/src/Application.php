@@ -42,12 +42,16 @@ class Application extends Silex
 
         $app['base_path']    = __DIR__;
         $app['logging_path'] = $app['base_path'] . '/../logs';
-
+/*
         $this->register(new SwaggerProvider(),
                         [
                           SwaggerServiceKey::SWAGGER_SERVICE_PATH => $app['base_path'],
                           SwaggerServiceKey::SWAGGER_API_DOC_PATH => '/docs/swagger.json',
                         ]);
+*/
+        $app->register(new SwaggerProvider(), [
+            "swagger.servicePath" => __DIR__ . "/HsBremen/WebApi/",
+        ]);
 
         $app->register(new SwaggerUIServiceProvider(),
                        [
@@ -66,7 +70,7 @@ class Application extends Silex
 
         // al about orders
         $this->register(new OrderServiceProvider());
-        $this->register(new SecurityProvider());
+       // $this->register(new SecurityProvider());
 
         // error handling
         $this->register(new ErrorProvider());
