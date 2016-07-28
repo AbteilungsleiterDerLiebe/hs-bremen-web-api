@@ -1,10 +1,11 @@
 <?php
 
-namespace HsBremen\WebApi\Order;
+namespace HsBremen\WebApi\Assetpool;
 
 use Doctrine\DBAL\Connection;
 use HsBremen\WebApi\Database\DatabaseException;
-use HsBremen\WebApi\Entity\Order;
+use HsBremen\WebApi\Entity\Asset;
+
 
 class AssetpoolRepository
 {
@@ -12,7 +13,7 @@ class AssetpoolRepository
     private $connection;
 
     /**
-     * OrderRepository constructor.
+     * AssetRepository constructor.
      *
      * @param Connection $connection
      */
@@ -25,9 +26,9 @@ class AssetpoolRepository
     {
         $sql = <<<EOS
 CREATE TABLE IF NOT EXISTS `{$this->getTableName()}` (
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    status VARCHAR(255) NOT NULL,
-    PRIMARY KEY (id)
+    assetid INT NOT NULL AUTO_INCREMENT,
+    assetname VARCHAR(30) NOT NULL,
+    PRIMARY KEY (assetid)
 )
 EOS;
 
@@ -36,25 +37,25 @@ EOS;
 
     public function getTableName()
     {
-        return 'order';
+        return 'assetpool';
     }
 
-    public function getById($id)
+    public function getById($assetid)
     {
         $sql = <<<EOS
 SELECT o.* 
 FROM `{$this->getTableName()}` o
-WHERE o.id = :id
+WHERE o.assetid = :assetid
 EOS;
 
-        $orders = $this->connection->fetchAll($sql, ['id' => $id]);
-        if (count($orders) === 0) {
+        $assets = $this->connection->fetchAll($sql, ['assetid' => $assetid]);
+        if (count($assets) === 0) {
             throw new DatabaseException(
-              sprintf('Order with id "%d" not exists!', $id)
+              sprintf('Asset with id "%d" not exists!', $assetid)
             );
         }
 
-        return Order::createFromArray($orders[0]);
+        return Asset::createFromArray($assets[0]);
     }
 
     public function getAll()
@@ -64,23 +65,23 @@ SELECT o.*
 FROM `{$this->getTableName()}` o
 EOS;
 
-        $orders = $this->connection->fetchAll($sql);
+        $assets = $this->connection->fetchAll($sql);
 
         $result = [];
 
-        foreach ($orders as $row) {
-            $result[] = Order::createFromArray($row);
+        foreach ($assets as $row) {
+            $result[] = Asset::createFromArray($row);
         }
 
         return $result;
     }
 
-    public function save(Order $order)
+    public function save(Asset $asset)
     {
-        $data = $order->jsonSerialize();
-        unset($data['id']);
+        $data = $asset->jsonSerialize();
+        unset($data['assetid']);
 
         $this->connection->insert($this->getTableName(), $data);
-        $order->setId($this->connection->lastInsertId());
+        $asset->setassetId($this->connection->lastInsertId());
     }
 }

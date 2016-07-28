@@ -1,58 +1,57 @@
 <?php
 
-namespace HsBremen\WebApi\Order;
-
-use HsBremen\WebApi\Entity\Order;
+namespace HsBremen\WebApi\Assetpool;
+use HsBremen\WebApi\Entity\Asset;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Class OrderEvent
  *
- * @package HsBremen\WebApi\Order
+ * @package HsBremen\WebApi\Assetpool
  */
 class AssetpoolEvent extends Event
 {
-    const GET_DETAILS = 'order.get_details';
+    const GET_DETAILS = 'asset.get_details';
 
-    /** @var  Order */
-    private $order;
+    /** @var  Asset */
+    private $asset;
 
     /** @var  int */
-    private $orderId;
+    private $assetId;
 
     /**
      * @return int
      */
-    public function getOrderId()
+    public function getAssetId()
     {
-        return $this->orderId;
+        return $this->assetId;
     }
 
     /**
-     * @param int $orderId
+     * @param int $assetId
      *
-     * @return OrderEvent
+     * @return AssetpoolEvent
      */
-    public function setOrderId($orderId)
+    public function setAssetId($assetId)
     {
-        $this->orderId = $orderId;
+        $this->assetId = $assetId;
 
         return $this;
     }
 
     /**
-     * @return \HsBremen\WebApi\Entity\Order
+     * @return \HsBremen\WebApi\Entity\Asset
      */
-    public function getOrder()
+    public function getAsset()
     {
-        return $this->order;
+        return $this->asset;
     }
 
     /**
-     * @param \HsBremen\WebApi\Entity\Order $order
+     * @param \HsBremen\WebApi\Entity\Asset $asset
      */
-    public function setOrder(Order $order)
+    public function setAsset(Asset $asset)
     {
-        $this->order = $order;
+        $this->asset = $asset;
     }
 }

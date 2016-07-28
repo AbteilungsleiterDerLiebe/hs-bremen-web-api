@@ -1,93 +1,93 @@
 <?php
 
-namespace HsBremen\WebApi\Order;
+namespace HsBremen\WebApi\Assetpool;
 
-use HsBremen\WebApi\Entity\Order;
+use HsBremen\WebApi\Entity\Asset;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class AssetpoolService
 {
-    /** @var  OrderRepository */
-    private $orderRepository;
+    /** @var  AssetpoolRepository */
+    private $assetpoolRepository;
 
     /** @var  EventDispatcherInterface */
     private $eventDispatcher;
 
     /**
-     * OrderService constructor.
+     * AssetpoolService constructor.
      *
-     * @param OrderRepository          $orderRepository
+     * @param AssetpoolRepository $assetpoolRepository
      * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
-      OrderRepository $orderRepository,
+      AssetpoolRepository $assetpoolRepository,
       EventDispatcherInterface $eventDispatcher
     ) {
-        $this->orderRepository = $orderRepository;
+        $this->assetpoolRepository = $assetpoolRepository;
         $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
-     * GET /order
+     * GET /asset
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function getList()
     {
-        return new JsonResponse($this->orderRepository->getAll());
+        return new JsonResponse($this->assetpoolRepository->getAll());
     }
 
     /**
-     * GET /order/{orderId}
+     * GET /asset/{assetId}
      *
-     * @param $orderId
+     * @param $assetId
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function getDetails($orderId)
+    public function getDetails($assetId)
     {
-        $event = new OrderEvent();
-        $event->setOrderId($orderId);
+        $event = new AssetpoolEvent();
+        $event->setAssetId($assetId);
 
-        $this->eventDispatcher->dispatch(OrderEvent::GET_DETAILS, $event);
+        $this->eventDispatcher->dispatch(AssetpoolEvent::GET_DETAILS, $event);
 
-        return new JsonResponse($event->getOrder());
+        return new JsonResponse($event->getAsset());
     }
 
     /**
-     * POST /order
+     * POST /asset
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function createOrder(Request $request)
+    public function createAsset(Request $request)
     {
         $postData = $request->request->all();
-        unset($postData['id']);
+        unset($postData['assetid']);
 
-        $order = Order::createFromArray($postData);
+        $asset = Asset::createFromArray($postData);
 
-        $this->orderRepository->save($order);
+        $this->assetpoolRepository->save($asset);
 
-        return new JsonResponse($order, 201);
+        return new JsonResponse($asset, 201);
     }
 
     /**
-     * PUT /order/{orderId}
+     * PUT /asset/{assetId}
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function changeOrder(Request $request)
+    public function changeAsset(Request $request)
     {
-        $order = new Order(1);
-        $newId = $request->request->get('id', 0);
-        $order->setId($newId);
+        $asset = new Asset(1);
+        $newassetId = $request->request->get('assetId', 0);
+        $asset->setId($newassetId);
 
-        return new JsonResponse($order);
+        return new JsonResponse($asset);
     }
 }

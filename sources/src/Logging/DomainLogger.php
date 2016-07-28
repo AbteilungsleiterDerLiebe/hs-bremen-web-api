@@ -2,7 +2,8 @@
 
 namespace HsBremen\WebApi\Logging;
 
-use HsBremen\WebApi\Order\OrderEvent;
+use HsBremen\WebApi\Assetpool\AssetpoolEvent;
+use HsBremen\WebApi\Entity\Asset;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -32,17 +33,38 @@ class DomainLogger implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-          OrderEvent::GET_DETAILS => ['logGetDetails', -10],
+          AssetpoolEvent::GET_DETAILS => ['logGetDetails', -10],
         ];
     }
 
     /**
-     * @param \HsBremen\WebApi\Order\OrderEvent $event
+     * Simple helper to debug to the console
+     *
+     * @param  object, array, string $data
+     * @return string
      */
-    public function logGetDetails(OrderEvent $event)
+    function debug_to_console( $data ) {
+
+        if ( is_array( $data ) )
+            $output = "<script>console.log( 'Debug Objects: " . implode( ',', $data) . "' );</script>";
+        else
+            $output = "<script>console.log( 'Debug Objects: " . $data . "' );</script>";
+
+        echo $output;
+    }
+
+    /**
+     * @param \HsBremen\WebApi\Assetpool\AssetpoolEvent $event
+     */
+    public function logGetDetails(AssetpoolEvent $event)
     {
-        $order   = $event->getOrder();
-        $message = sprintf('Order with id %d requested.', $order->getId());
+        $asset   = $event->getAsset();
+        $message = sprintf('Asset with id %d requested.', $asset->getAssetid());
+
+        $dir = "/var/www/sources/assetpool";
+        $a = scandir($dir);
+        $b = scandir($dir . '/' . $a[1]);
+
         $this->logger->info($message);
     }
 }

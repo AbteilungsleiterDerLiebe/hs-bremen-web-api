@@ -1,6 +1,6 @@
 <?php
 
-namespace HsBremen\WebApi\Order;
+namespace HsBremen\WebApi\Assetpool;
 
 use Silex\Application;
 use Silex\ControllerCollection;
@@ -16,24 +16,24 @@ class AssetpoolRoutesProvider implements ControllerProviderInterface
         $controllers = $app['controllers_factory'];
 
         /**
-         * @SWG\Parameter(name="id", type="integer", format="int32", in="path")
-         * @SWG\Tag(name="order", description="All about orders")
+         * @SWG\Parameter(name="assetid", type="integer", format="int11", in="path")
+         * @SWG\Tag(name="order", description="All about assets")
          */
 
         /**
          * @SWG\Get(
-         *     path="/order/",
-         *     tags={"order"},
+         *     path="/asset/",
+         *     tags={"asset"},
          *     @SWG\Response(response="200", description="An example resource")
          * )
          */
         // see https://github.com/silexphp/Silex/issues/149
-        $controllers->get('/', 'service.order:getList');
+        $controllers->get('/', 'service.asset:getList');
         /**
          * @SWG\Get(
-         *     path="/order/{id}",
-         *     tags={"order"},
-         *     @SWG\Parameter(ref="#/parameters/id"),
+         *     path="/asset/{assetId}",
+         *     tags={"asset"},
+         *     @SWG\Parameter(ref="#/parameters/assetId"),
          *     @SWG\Response(
          *         response="200",
          *         description="An example resource",
@@ -41,29 +41,29 @@ class AssetpoolRoutesProvider implements ControllerProviderInterface
          *     )
          * )
          */
-        $controllers->get('/{orderId}', 'service.order:getDetails');
+        $controllers->get('/{assetId}', 'service.asset:getDetails');
         /**
          * @SWG\Post(
-         *     tags={"order"},
-         *     path="/order/",
+         *     tags={"asset"},
+         *     path="/asset/",
          *     @SWG\Parameter(name="order", in="body", @SWG\Schema(ref="#/definitions/order")),
-         *     @SWG\Response(response="201", description="An example resource")
+         *     @SWG\Response(response="201", description="TODO funktioniert noch nicht!")
          * )
          */
-        $controllers->post('/', 'service.order:createOrder');
+        $controllers->post('/', 'service.asset:createAsset');
         /**
          * @SWG\Put(
-         *     tags={"order"},
-         *     path="/order/{id}",
+         *     tags={"asset"},
+         *     path="/asset/{id}",
          *     @SWG\Parameter(ref="#/parameters/id"),
          *     @SWG\Response(
          *          response="200",
-         *          description="An example resource",
+         *          description="TODO funktioniert noch nicht!",
          *          @SWG\Schema(ref="#/definitions/order")
          *     )
          * )
          */
-        $controllers->put('/{orderId}', 'service.order:changeOrder');
+        $controllers->put('/{assetId}', 'service.asset:changeAsset');
 
         return $controllers;
     }

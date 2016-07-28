@@ -1,28 +1,28 @@
 <?php
 
-namespace HsBremen\WebApi\Order;
+namespace HsBremen\WebApi\Assetpool;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Class OrderDomainEventSubscriber
+ * Class AssetpoolDomainEventSubscriber
  *
- * @package HsBremen\WebApi\Order
+ * @package HsBremen\WebApi\Assetpool
  */
 class AssetpoolDomainEventSubscriber implements EventSubscriberInterface
 {
-    /** @var  OrderRepository */
-    private $orderRepository;
+    /** @var  AssetpoolRepository */
+    private $assetpoolRepository;
 
     /**
-     * OrderDomainEventSubscriber constructor.
+     * AssetpoolDomainEventSubscriber constructor.
      *
-     * @param OrderRepository $orderRepository
+     * @param AssetpoolRepository $orderRepository
      */
     public function __construct(
-      OrderRepository $orderRepository
+        AssetpoolRepository $assetpoolRepository
     ) {
-        $this->orderRepository = $orderRepository;
+        $this->assetpoolRepository = $assetpoolRepository;
     }
 
 
@@ -30,18 +30,18 @@ class AssetpoolDomainEventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-          OrderEvent::GET_DETAILS => ['getOrderDetails', 1024],
+          AssetpoolEvent::GET_DETAILS => ['getAssetDetails', 1024],
         ];
     }
 
     /**
-     * @param \HsBremen\WebApi\Order\OrderEvent $event
+     * @param \HsBremen\WebApi\Assetpool\AssetpoolEvent $event
      *
      * @throws \HsBremen\WebApi\Database\DatabaseException
      */
-    public function getOrderDetails(OrderEvent $event)
+    public function getAssetDetails(AssetpoolEvent $event)
     {
-        $order = $this->orderRepository->getById($event->getOrderId());
-        $event->setOrder($order);
+        $asset = $this->assetpoolRepository->getById($event->getAssetId());
+        $event->setAsset($asset);
     }
 }

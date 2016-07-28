@@ -1,6 +1,6 @@
 <?php
 
-namespace HsBremen\WebApi\Order;
+namespace HsBremen\WebApi\Assetpool;
 
 use HsBremen\WebApi\Logging\DomainLogger;
 use Silex\Application;
@@ -12,17 +12,17 @@ class AssetpoolServiceProvider implements ServiceProviderInterface
     /** {@inheritdoc} */
     public function register(Application $app)
     {
-        $app['repo.order'] = $app->share(function (Application $app) {
-            return new OrderRepository($app['db']);
+        $app['repo.asset'] = $app->share(function (Application $app) {
+            return new AssetpoolRepository($app['db']);
         });
 
-        $app['service.order'] = $app->share(function (Application $app) {
-            return new OrderService($app['repo.order'], $app['dispatcher']);
+        $app['service.asset'] = $app->share(function (Application $app) {
+            return new AssetpoolService($app['repo.asset'], $app['dispatcher']);
         });
 
-        $app['subscriber.order_domain'] = $app->share(
+        $app['subscriber.asset_domain'] = $app->share(
           function (Application $app) {
-              return new OrderDomainEventSubscriber($app['repo.order']);
+              return new AssetpoolDomainEventSubscriber($app['repo.asset']);
           }
         );
 
@@ -35,16 +35,16 @@ class AssetpoolServiceProvider implements ServiceProviderInterface
         /** @var EventDispatcherInterface $dispatcher */
         $dispatcher = $app['dispatcher'];
         $dispatcher->addSubscriber($app['subscriber.domain_logger']);
-        $dispatcher->addSubscriber($app['subscriber.order_domain']);
+        $dispatcher->addSubscriber($app['subscriber.asset_domain']);
 
-        $app->mount('/order', new OrderRoutesProvider());
+        $app->mount('/asset', new AssetpoolRoutesProvider());
     }
 
     /** {@inheritdoc} */
     public function boot(Application $app)
     {
         /** @var OrderRepository $repo */
-        $repo = $app['repo.order'];
+        $repo = $app['repo.asset'];
         $repo->createTable();
     }
 }

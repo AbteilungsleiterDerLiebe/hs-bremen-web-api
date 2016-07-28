@@ -4,10 +4,10 @@ namespace HsBremen\WebApi;
 
 use Basster\Silex\Provider\Swagger\SwaggerProvider;
 use Basster\Silex\Provider\Swagger\SwaggerServiceKey;
+use HsBremen\WebApi\Assetpool\AssetpoolServiceProvider;
 use HsBremen\WebApi\Database\DatabaseProvider;
 use HsBremen\WebApi\Error\ErrorProvider;
 use HsBremen\WebApi\Logging\LoggingProvider;
-use HsBremen\WebApi\Order\OrderServiceProvider;
 use HsBremen\WebApi\Security\SecurityProvider;
 use JDesrosiers\Silex\Provider\CorsServiceProvider;
 use Silex\Application as Silex;
@@ -69,7 +69,7 @@ class Application extends Silex
         $app->register(new DatabaseProvider());
 
         // al about orders
-        $this->register(new OrderServiceProvider());
+        $this->register(new AssetpoolServiceProvider());
        // $this->register(new SecurityProvider());
 
         // error handling
