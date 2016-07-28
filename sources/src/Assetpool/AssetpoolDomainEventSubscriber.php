@@ -31,6 +31,7 @@ class AssetpoolDomainEventSubscriber implements EventSubscriberInterface
     {
         return [
           AssetpoolEvent::GET_DETAILS => ['getAssetDetails', 1024],
+          AssetpoolEvent::CREATE_ASSET => ['createAsset', 1024]
         ];
     }
 
@@ -43,5 +44,10 @@ class AssetpoolDomainEventSubscriber implements EventSubscriberInterface
     {
         $asset = $this->assetpoolRepository->getById($event->getAssetId());
         $event->setAsset($asset);
+    }
+    public function createAsset(AssetpoolEvent $event)
+    {
+        $this->assetpoolRepository->createAsset($event->getAssetName(), $event->getPath());
+       // $event->setAsset($asset);
     }
 }

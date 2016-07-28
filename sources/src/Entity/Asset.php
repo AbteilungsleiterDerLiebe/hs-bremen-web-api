@@ -21,7 +21,23 @@ class Asset implements \JsonSerializable
      * @SWG\Property(type="integer", format="int32")
      */
     private $assetid;
+    private $path = "path is not set";
 
+    /**
+     * @return mixed
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * @param mixed $path
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+    }
     /**
      * @var string
      * @SWG\Property(type="string")
@@ -38,6 +54,7 @@ class Asset implements \JsonSerializable
         $Asset = new self();
         if (array_key_exists('assetid', $row)) {
             $Asset->setAssetid($row['assetid']);
+            $Asset->setPath($row['path']);
         }
         $Asset->setAssetname($row['assetname']);
 
@@ -62,8 +79,7 @@ class Asset implements \JsonSerializable
         return [
             'assetid'     => $this->assetid,
             'assetname' => $this->assetname,
-            'screenshotpath' => 'TODO',
-            'path' => 'TODO'
+            'path' => $this->path
         ];
     }
 

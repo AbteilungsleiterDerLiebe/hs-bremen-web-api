@@ -57,22 +57,19 @@ class AssetpoolService
     }
 
     /**
-     * POST /asset
+     * POST /asset/{assetname}&{path}
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function createAsset(Request $request)
+    public function createAsset($assetname, $path)
     {
-        $postData = $request->request->all();
-        unset($postData['assetid']);
-
-        $asset = Asset::createFromArray($postData);
-
-        $this->assetpoolRepository->save($asset);
-
-        return new JsonResponse($asset, 201);
+        $event = new AssetpoolEvent();
+        $event->setAssetName($assetname);
+        $event->setPath($path);
+        $this->eventDispatcher->dispatch(AssetpoolEvent::CREATE_ASSET, $event);
+        return new JsonResponse($this->assetpoolRepository->getAll());
     }
 
     /**

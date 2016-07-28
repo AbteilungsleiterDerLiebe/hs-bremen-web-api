@@ -12,12 +12,47 @@ use Symfony\Component\EventDispatcher\Event;
 class AssetpoolEvent extends Event
 {
     const GET_DETAILS = 'asset.get_details';
+    const CREATE_ASSET = 'asset.create_asset';
 
     /** @var  Asset */
     private $asset;
 
     /** @var  int */
     private $assetId;
+    private $assetName;
+    private $path;
+
+    /**
+     * @return mixed
+     */
+    public function getAssetName()
+    {
+        return $this->assetName;
+    }
+
+    /**
+     * @param mixed $assetName
+     */
+    public function setAssetName($assetName)
+    {
+        $this->assetName = $assetName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * @param mixed $path
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+    }
 
     /**
      * @return int

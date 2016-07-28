@@ -40,6 +40,32 @@ EOS;
         return 'assetpool';
     }
 
+    public function createAsset($assetname, $path){
+      //  $this->debug_to_console($assetname);
+        /*
+        <<<EOS
+INSERT INTO `{$this->getTableName()}` (assetname, path)
+VALUES ('assetname', 'path');
+EOS;
+        */
+        $sql = <<<EOS
+INSERT INTO `{$this->getTableName()}` (assetname, path)
+VALUES ('${assetname}', '${path}');
+EOS;
+        return $this->connection->exec($sql);
+    }
+
+
+    function debug_to_console( $data ) {
+
+        if ( is_array( $data ) )
+            $output = "<script>console.log( 'Debug Objects: " . implode( ',', $data) . "' );</script>";
+        else
+            $output = "<script>console.log( 'Debug Objects: " . $data . "' );</script>";
+
+        echo $output;
+    }
+
     public function getById($assetid)
     {
         $sql = <<<EOS

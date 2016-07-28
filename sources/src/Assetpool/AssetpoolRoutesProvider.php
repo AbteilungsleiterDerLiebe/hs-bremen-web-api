@@ -17,6 +17,8 @@ class AssetpoolRoutesProvider implements ControllerProviderInterface
 
         /**
          * @SWG\Parameter(name="assetid", type="integer", format="int11", in="path")
+         * @SWG\Parameter(name="assetname", type="string", in="path")
+         * @SWG\Parameter(name="path", type="string", in="path")
          * @SWG\Tag(name="order", description="All about assets")
          */
 
@@ -31,38 +33,28 @@ class AssetpoolRoutesProvider implements ControllerProviderInterface
         $controllers->get('/', 'service.asset:getList');
         /**
          * @SWG\Get(
-         *     path="/asset/{assetId}",
+         *     path="/asset/{assetid}",
          *     tags={"asset"},
-         *     @SWG\Parameter(ref="#/parameters/assetId"),
+         *     @SWG\Parameter(ref="#/parameters/assetid"),
          *     @SWG\Response(
          *         response="200",
-         *         description="An example resource",
-         *          @SWG\Schema(ref="#/definitions/order")
-         *     )
+         *         description="An example resource")
          * )
          */
         $controllers->get('/{assetId}', 'service.asset:getDetails');
         /**
          * @SWG\Post(
+         *     path="/asset/createAsset/{assetname}&{path}",
          *     tags={"asset"},
-         *     path="/asset/",
-         *     @SWG\Parameter(name="order", in="body", @SWG\Schema(ref="#/definitions/order")),
-         *     @SWG\Response(response="201", description="TODO funktioniert noch nicht!")
-         * )
-         */
-        $controllers->post('/', 'service.asset:createAsset');
-        /**
-         * @SWG\Put(
-         *     tags={"asset"},
-         *     path="/asset/{id}",
-         *     @SWG\Parameter(ref="#/parameters/id"),
+         *     @SWG\Parameter(ref="#/parameters/assetname"),
+         *     @SWG\Parameter(ref="#/parameters/path"),
          *     @SWG\Response(
-         *          response="200",
-         *          description="TODO funktioniert noch nicht!",
-         *          @SWG\Schema(ref="#/definitions/order")
-         *     )
+         *         response="200",
+         *         description="An example resource")
          * )
          */
+        $controllers->get('/createasset/{assetname}&{path}', 'service.asset:createAsset');
+
         $controllers->put('/{assetId}', 'service.asset:changeAsset');
 
         return $controllers;
