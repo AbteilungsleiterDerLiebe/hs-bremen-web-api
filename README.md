@@ -1,5 +1,9 @@
 # Web-API | HS-Bremen @ SoSe 2016 
 
+## Assetpool
+
+- Die Assetpool-API dient dazu, 'Assets' bzw. Referenzen aus diese in eine Datenbank einzuordnen und zu Taggen. Wobei hier nur Beispieldaten in der Datenbank abgelegt sind.
+
 ## Projekt aufsetzen
 
 Grundlegende Struktur:
