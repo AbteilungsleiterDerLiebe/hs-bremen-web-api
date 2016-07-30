@@ -15,8 +15,8 @@ Datenbank initialisieren:
 (pw: 123)
 
 URLs:
-Index (frontend): web-api.vm
-Swagger UI: web-api.vm/docs/swagger
+- Index (frontend): web-api.vm
+- Swagger UI: web-api.vm/docs/swagger
 
 ## Benötigte Software
 - [Git](https://git-scm.com/) (Quellcodeverwaltung)
