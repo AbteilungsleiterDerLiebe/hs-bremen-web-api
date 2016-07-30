@@ -42,17 +42,49 @@
                 }
             }
         },
-        "/asset/createAsset/{assetname}&{path}": {
+        "/asset/createasset/": {
             "post": {
                 "tags": [
                     "asset"
                 ],
                 "parameters": [
                     {
-                        "$ref": "#/parameters/assetname"
-                    },
+                        "name": "json",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/asset"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "An example resource"
+                    }
+                }
+            }
+        },
+        "/asset/tags/": {
+            "get": {
+                "tags": [
+                    "tags"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An example resource"
+                    }
+                }
+            }
+        },
+        "/asset/tags/{tagid}": {
+            "get": {
+                "tags": [
+                    "tags"
+                ],
+                "summary": "get assets by tag-id",
+                "description": "enter a Valid tag-id to get the corresponding assets.",
+                "parameters": [
                     {
-                        "$ref": "#/parameters/path"
+                        "$ref": "#/parameters/tagid"
                     }
                 ],
                 "responses": {
@@ -64,6 +96,16 @@
         }
     },
     "definitions": {
+        "asset": {
+            "properties": {
+                "assetname": {
+                    "example": "defaultname"
+                },
+                "path": {
+                    "example": "defaultpath"
+                }
+            }
+        },
         "Asset": {
             "properties": {
                 "assetid": {
@@ -75,11 +117,20 @@
                 }
             },
             "type": "object"
+        },
+        "Tag.php": {
+            "type": "object"
         }
     },
     "parameters": {
         "assetid": {
             "name": "assetid",
+            "in": "path",
+            "type": "integer",
+            "format": "int11"
+        },
+        "tagid": {
+            "name": "tagid",
             "in": "path",
             "type": "integer",
             "format": "int11"
@@ -96,9 +147,7 @@
         }
     },
     "tags": [
-        {
-            "name": "order",
-            "description": "All about assets"
-        }
+        {},
+        {}
     ]
 }

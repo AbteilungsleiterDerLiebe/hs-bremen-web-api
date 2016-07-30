@@ -22,7 +22,6 @@ class Asset implements \JsonSerializable
      */
     private $assetid;
     private $path = "path is not set";
-
     /**
      * @return mixed
      */
@@ -55,9 +54,8 @@ class Asset implements \JsonSerializable
         if (array_key_exists('assetid', $row)) {
             $Asset->setAssetid($row['assetid']);
             $Asset->setPath($row['path']);
+            $Asset->setAssetname($row['assetname']);
         }
-        $Asset->setAssetname($row['assetname']);
-
         return $Asset;
     }
 

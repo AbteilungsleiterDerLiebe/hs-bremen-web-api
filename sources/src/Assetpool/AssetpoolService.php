@@ -38,7 +38,6 @@ class AssetpoolService
     {
         return new JsonResponse($this->assetpoolRepository->getAll());
     }
-
     /**
      * GET /asset/{assetId}
      *
@@ -57,21 +56,45 @@ class AssetpoolService
     }
 
     /**
-     * POST /asset/{assetname}&{path}
+     * POST /asset/createAsset
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function createAsset($assetname, $path)
+    public function createAsset(Request $request)
     {
+        $assetname = $request->request->get('assetname', 0);
+        $path = $request->request->get('path', 0);
         $event = new AssetpoolEvent();
         $event->setAssetName($assetname);
         $event->setPath($path);
         $this->eventDispatcher->dispatch(AssetpoolEvent::CREATE_ASSET, $event);
         return new JsonResponse($this->assetpoolRepository->getAll());
     }
-
+    /**
+     * GET /asset
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getTagList()
+    {
+        return new JsonResponse($this->assetpoolRepository->getAllTags());
+    }
+    /**
+     * GET /asset/{assetId}
+     *
+     * @param $assetId
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getAssetsByTag($tagId)
+    {
+        $event = new AssetpoolEvent();
+        $event->setTagId($tagId);
+        $this->eventDispatcher->dispatch(AssetpoolEvent::GET_ASSETS_BY_TAG, $event);
+        return new JsonResponse($event->getAssetArray());
+    }
     /**
      * PUT /asset/{assetId}
      *
@@ -84,7 +107,6 @@ class AssetpoolService
         $asset = new Asset(1);
         $newassetId = $request->request->get('assetId', 0);
         $asset->setId($newassetId);
-
         return new JsonResponse($asset);
     }
 }

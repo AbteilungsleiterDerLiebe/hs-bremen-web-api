@@ -13,6 +13,8 @@ class AssetpoolEvent extends Event
 {
     const GET_DETAILS = 'asset.get_details';
     const CREATE_ASSET = 'asset.create_asset';
+    const CREATE_ASSETPOST = 'asset.create_assetpost';
+    const GET_ASSETS_BY_TAG = 'asset.get_asset_by_tag';
 
     /** @var  Asset */
     private $asset;
@@ -21,6 +23,40 @@ class AssetpoolEvent extends Event
     private $assetId;
     private $assetName;
     private $path;
+    private $tagId;
+    private $assetArray;
+
+    /**
+     * @return mixed
+     */
+    public function getAssetArray()
+    {
+        return $this->assetArray;
+    }
+
+    /**
+     * @param mixed $assetArray
+     */
+    public function setAssetArray($assetArray)
+    {
+        $this->assetArray = $assetArray;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTagId()
+    {
+        return $this->tagId;
+    }
+
+    /**
+     * @param mixed $tagId
+     */
+    public function setTagId($tagId)
+    {
+        $this->tagId = $tagId;
+    }
 
     /**
      * @return mixed

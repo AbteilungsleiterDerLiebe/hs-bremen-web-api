@@ -17,13 +17,17 @@ class AssetpoolRoutesProvider implements ControllerProviderInterface
 
         /**
          * @SWG\Parameter(name="assetid", type="integer", format="int11", in="path")
+         * @SWG\Parameter(name="tagid", type="integer", format="int11", in="path")
          * @SWG\Parameter(name="assetname", type="string", in="path")
          * @SWG\Parameter(name="path", type="string", in="path")
-         * @SWG\Tag(name="order", description="All about assets")
+         * @SWG\Definition(definition="asset",
+         *     @SWG\Property(property="assetname", example="defaultname"),
+         *     @SWG\Property(property="path", example="defaultpath"))
+         * @SWG\Tag.php(name="asset", description="All about assets")
+         * @SWG\Tag.php(name="tags", description="All about tags")
          */
 
-        /**
-         * @SWG\Get(
+         /** @SWG\Get(
          *     path="/asset/",
          *     tags={"asset"},
          *     @SWG\Response(response="200", description="An example resource")
@@ -44,19 +48,33 @@ class AssetpoolRoutesProvider implements ControllerProviderInterface
         $controllers->get('/{assetId}', 'service.asset:getDetails');
         /**
          * @SWG\Post(
-         *     path="/asset/createAsset/{assetname}&{path}",
+         *     path="/asset/createasset/",
          *     tags={"asset"},
-         *     @SWG\Parameter(ref="#/parameters/assetname"),
-         *     @SWG\Parameter(ref="#/parameters/path"),
-         *     @SWG\Response(
-         *         response="200",
-         *         description="An example resource")
+         *     @SWG\Parameter(name="json", in="body", @SWG\Schema(ref="#/definitions/asset")),
+         *     @SWG\Response(response="201", description="An example resource")
          * )
          */
-        $controllers->get('/createasset/{assetname}&{path}', 'service.asset:createAsset');
-
-        $controllers->put('/{assetId}', 'service.asset:changeAsset');
-
+        $controllers->Post('/createasset/', 'service.asset:createAsset');
+        /** @SWG\Get(
+         *     path="/asset/tags/",
+         *     tags={"tags"},
+         *     @SWG\Response(response="200", description="An example resource")
+         * )
+         */
+        $controllers->get('/tags/', 'service.asset:getTagList');
+                /**
+                 * @SWG\Get(
+                 *     summary="get assets by tag-id",
+                 *     description="enter a Valid tag-id to get the corresponding assets.",
+                 *     path="/asset/tags/{tagid}",
+                 *     tags={"tags"},
+                 *     @SWG\Parameter(ref="#/parameters/tagid"),
+                 *     @SWG\Response(
+                 *         response="200",
+                 *         description="An example resource")
+                 * )
+                 */
+        $controllers->get('/tags/{tagId}', 'service.asset:getAssetsByTag');
         return $controllers;
     }
 }

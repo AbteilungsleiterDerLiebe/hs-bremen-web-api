@@ -137,3 +137,6 @@
 [2016-07-28 16:58:59] api.INFO: Asset with id 1 requested. [] []
 [2016-07-28 16:59:36] api.INFO: Asset with id 2 requested. [] []
 [2016-07-28 17:35:45] api.INFO: Asset with id 2 requested. [] []
+[2016-07-29 20:00:21] api.INFO: Asset with id 3 requested. [] []
+[2016-07-29 20:01:40] api.INFO: Asset with id 1 requested. [] []
+[2016-07-29 20:46:25] api.INFO: Asset with id 1 requested. [] []

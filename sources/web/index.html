@@ -26,12 +26,13 @@
 </head>
 <body>
 
+<!-- Searchbar ................................................................. -->
 <div class="container">
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
             <div id="imaginary_container">
                 <div class="input-group stylish-input-group">
-                    <input type="text" class="form-control"  placeholder="Search" >
+                    <input type="text" class="form-control"  placeholder="Enter Tag or Assetname" >
                     <span class="input-group-addon">
                         <button type="submit">
                             <span class="glyphicon glyphicon-search"></span>
@@ -43,28 +44,103 @@
     </div>
 </div>
 
-<table data-toggle="table" data-url="/asset" data-height="299">
-    <thead>
-    <tr>
-        <th data-field="assetid"> Asset ID</th>
-        <th data-field="assetname">Asset Name</th>
-        <th data-field="path">Asset Path</th>
-        <th data ="assetid" class="btn btn-info">Sort</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <th  >asd</th>
-        <th  >asd</th>
-        <th  >asd</th>
-    </tr>
+<!-- Assettable ................................................................. -->
+<div class="container" align="middle">
+    <h3>Asset Gallery</h3>
+</div>
 
-    </tbody>
+<div class="container">
+    <table data-toggle="table" data-url="/asset" data-height="299">
+        <thead>
+        <tr>
+            <th data-field="assetid"> Asset ID</th>
+            <th data-field="assetname">Asset Name</th>
+            <th data-field="path">Asset Path</th>
+        </tr>
+        </thead>
+    </table>
+</div>
 
-</table>
+<!-- ................................................................. -->
 
+<div class="container" align="middle">
+    <h3>Create new Asset</h3>
+</div>
 
+<div class="container" align="middle">
+    <form class="form-inline" id="createAssetForm">
+        <div class="form-group">
+            <label for="assetnameInput">Assetname</label>
+            <input type="text" class="form-control" id="assetnameInput" placeholder="assetname">
+        </div>
+        <div class="form-group">
+            <label for="pathInput">Assetpath</label>
+            <input type="text" class="form-control" id="pathInput" placeholder="path to asset">
+        </div>
+        <button type="submit" id="submitbutton" class="btn btn-default">submit data</button>
+    </form>
+</div>
 
+<!-- Tag Table ................................................................. -->
+<div class="container" align="middle">
+    <h3>Tags</h3>
+</div>
+
+<div class="container">
+    <table data-toggle="table" data-url="/asset/tags/" data-height="299">
+        <thead>
+        <tr>
+            <th data-field="tag_id"> Tag ID</th>
+            <th data-field="tag_title">Tag Name</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<div class="container" align="middle">
+    <input type="submit" class="btn btn-info" value="Single Family House">
+    <input type="submit" class="btn btn-info" value="Double Family House">
+    <input type="submit" class="btn btn-info" value="Sky Scraper" id="qweqwe">
+</div>
+
+<!-- Asset by Tag ................................................................. -->
+<div class="container" align="middle">
+    <h3>Asset By Tag</h3>
+</div>
+<div class="container">
+    <table data-toggle="table" data-url="/asset/tags/1" id="AssetTagTable" data-height="299">
+        <thead>
+        <tr>
+            <th data-field="assetid"> Asset ID</th>
+            <th data-field="assetname">Asset Name</th>
+            <th data-field="path">Asset Path</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<script>
+    $('#qweqwe').click(
+            $('#AssetTagTable').bootstrapTable('refresh'), {
+                url: "/asset/tags/2"
+            }
+    )
+</script>
+
+<script>
+    $(function(){
+        $("#createAssetForm").submit(function() {
+            var name = document.getElementById('assetnameInput').value;
+            var path = document.getElementById('pathInput').value;
+
+            $.ajax({
+                type: "POST",
+                url: '/asset/createasset/',
+                data: {"assetname" : name, "path" : path}
+            });
+        });
+    });
+</script>
 
 <!--
 <a href="#" class="btn btn-info" role="button">Link Button</a>

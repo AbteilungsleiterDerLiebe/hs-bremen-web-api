@@ -31,7 +31,9 @@ class AssetpoolDomainEventSubscriber implements EventSubscriberInterface
     {
         return [
           AssetpoolEvent::GET_DETAILS => ['getAssetDetails', 1024],
-          AssetpoolEvent::CREATE_ASSET => ['createAsset', 1024]
+          AssetpoolEvent::CREATE_ASSET => ['createAsset', 1024],
+          AssetpoolEvent::CREATE_ASSETPOST => ['createAssetpool', 1024],
+          AssetpoolEvent::GET_ASSETS_BY_TAG => ['getAssetsBytag' ,1024]
         ];
     }
 
@@ -49,5 +51,14 @@ class AssetpoolDomainEventSubscriber implements EventSubscriberInterface
     {
         $this->assetpoolRepository->createAsset($event->getAssetName(), $event->getPath());
        // $event->setAsset($asset);
+    }
+    public function getAssetsBytag($event){
+        $asset = $this->assetpoolRepository->getAssetsByTag($event->getTagId());
+        $event->setAssetArray($asset);
+    }
+    public function createAssetpost(AssetpoolEvent $event)
+    {
+        //$this->assetpoolRepository->createAsset($event->getAssetName(), $event->getPath());
+        // $event->setAsset($asset);
     }
 }
