@@ -1,5 +1,23 @@
 # Web-API | HS-Bremen @ SoSe 2016 
 
+## Projekt aufsetzen
+
+Grundlegende Struktur:
+- Die 'Grundsoftware' wurde vom geforkten Projekt größtenteils übernommen.
+
+Composer Installieren:
+- cd var/www/sources
+- composer install
+
+Datenbank initialisieren:
+- cd var/www/sources
+- mysql -u root -p web_api < backupfile.sql
+(pw: 123)
+
+URLs:
+Index (frontend): web-api.vm
+Swagger UI: web-api.vm/docs/swagger
+
 ## Benötigte Software
 - [Git](https://git-scm.com/) (Quellcodeverwaltung)
 - [VirtualBox](https://www.virtualbox.org/) (Virtualisierungs Software)
@@ -76,7 +94,3 @@ Benötigt npm und python!
 - Browser: http://localhost:8080/
   
 TODO: PhpStorm Setup beschreiben!
-
-
-
-
