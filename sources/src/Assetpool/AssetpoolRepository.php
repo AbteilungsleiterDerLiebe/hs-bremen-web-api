@@ -46,14 +46,12 @@ EOS;
         return 'tags';
     }
 
+    public function getAssetTagsTable()
+    {
+        return 'asset_tags';
+    }
+
     public function createAsset($assetname, $path){
-      //  $this->debug_to_console($assetname);
-        /*
-        <<<EOS
-INSERT INTO `{$this->getTableName()}` (assetname, path)
-VALUES ('assetname', 'path');
-EOS;
-        */
         $sql = <<<EOS
 INSERT INTO `{$this->getAssetTable()}` (assetname, path)
 VALUES ('${assetname}', '${path}');
@@ -61,6 +59,13 @@ EOS;
         return $this->connection->exec($sql);
     }
 
+    public function tagAsset($assetid, $tagid){
+        $sql = <<<EOS
+INSERT INTO `{$this->getAssetTagsTable()}` (assetid, tag_id)
+VALUES ('${assetid}', '${tagid}');
+EOS;
+        return $this->connection->exec($sql);
+    }
 
     function debug_to_console( $data ) {
 

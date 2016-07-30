@@ -16,40 +16,168 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
-
+    <script src="js/bootstrap-table-filter.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <![endif]-->
 </head>
 <body>
 
-
-<form class="form-inline" id="createAssetForm">
-    <div class="form-group">
-        <label for="assetnameInput">Assetname</label>
-        <input type="text" class="form-control" id="assetnameInput" placeholder="assetname">
+<!-- Searchbar ................................................................. -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div id="imaginary_container">
+                <div class="input-group stylish-input-group">
+                    <input type="text" class="form-control"  placeholder="Enter Tag or Assetname" >
+                    <span class="input-group-addon">
+                        <button type="submit">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="pathInput">Assetpath</label>
-        <input type="text" class="form-control" id="pathInput" placeholder="path to asset">
-    </div>
-    <button type="submit" id="submitbutton" class="btn btn-default">submit data</button>
-</form>
+</div>
 
+<!-- Assettable ................................................................. -->
+<div class="container" align="middle">
+    <h3>Asset Gallery</h3>
+</div>
+
+<div class="container">
+    <table data-toggle="table" data-url="/asset" data-height="299">
+        <thead>
+        <tr>
+            <th data-field="assetid"> Asset ID</th>
+            <th data-field="assetname">Asset Name</th>
+            <th data-field="path">Asset Path</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<!-- ................................................................. -->
+
+<div class="container" align="middle">
+    <h3>Create new Asset</h3>
+</div>
+
+<div class="container" align="middle">
+    <form class="form-inline" id="createAssetForm">
+        <div class="form-group">
+            <label for="assetnameInput">Assetname</label>
+            <input type="text" class="form-control" id="assetnameInput" placeholder="assetname">
+        </div>
+        <div class="form-group">
+            <label for="pathInput">Assetpath</label>
+            <input type="text" class="form-control" id="pathInput" placeholder="path to asset">
+        </div>
+        <button type="submit" id="submitbutton" class="btn btn-default">submit data</button>
+    </form>
+</div>
+
+<!-- Tag Table ................................................................. -->
+<div class="container" align="middle">
+    <h3>Tags</h3>
+</div>
+
+<div class="container">
+    <table data-toggle="table" data-url="/asset/tags/" data-height="299" id="tagstable">
+        <thead>
+        <tr>
+            <th data-field="tag_id"> Tag ID</th>
+            <th data-field="tag_title">Tag Name</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+
+<script>
+    // var idClicked;
+    var $table = $('#AssetTagTable');
+    $("#tagstable").delegate("tr", "click", function(e) {
+        console.log($(e.currentTarget).index() + 1);
+        // idClicked = $(e.currentTarget).index() + 1;
+        $table.bootstrapTable('refresh', {
+            url: '/asset/tags/2'
+        });
+    });
+</script>
+
+<button onclick="loadtableagain()" class="btn btn-default">Refresh</button>
+
+
+<script>
+    var $table = $('#AssetTagTable');
+    $(function () {
+        $('#refresh').click(function () {
+            $table.bootstrapTable('refresh', {
+                url: '/asset/tags/2'
+            });
+        });
+    });
+</script>
+<script>
+    function loadtableagain() {
+
+        $table = $('#AssetTagTable');
+
+        alert($('#AssetTagTable').data('data-url'));
+
+        $('#AssetTagTable').data('data-url', '/asset/tags/2');
+
+        alert($('#AssetTagTable').data('data-url'));
+        // $('#AssetTagTable').bootstrapTable('refresh');
+        //  $('AssetTagTable').refresh();
+        $table.bootstrapTable('refresh', {url: '/asset/tags/2'});
+    }
+</script>
+
+
+<div class="container" align="middle">
+    <input type="submit" class="btn btn-info" value="Single Family House">
+    <input type="submit" class="btn btn-info" value="Double Family House">
+    <input type="submit" class="btn btn-info" value="Sky Scraper" id="qweqwe">
+</div>
+
+<!-- Asset by Tag ................................................................. -->
+<div class="container" align="middle">
+    <h3>Asset By Tag</h3>
+</div>
+
+<div class="container">
+    <table data-toggle="table" data-url="/asset/tags/1" id="AssetTagTable" data-height="299">
+        <thead>
+        <tr>
+            <th data-field="assetid"> Asset ID</th>
+            <th data-field="assetname">Asset Name</th>
+            <th data-field="path">Asset Path</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<script>
+    $('#qweqwe').click(
+            $('#AssetTagTable').bootstrapTable('refresh'), {
+                url: "/asset/tags/2"
+            }
+    )
+</script>
 
 <script>
     $(function(){
         $("#createAssetForm").submit(function() {
             var name = document.getElementById('assetnameInput').value;
             var path = document.getElementById('pathInput').value;
-
-            var json = {
-                "assetname" : "test2",
-                "path" : "test2"
-            }
 
             $.ajax({
                 type: "POST",
@@ -60,8 +188,13 @@
     });
 </script>
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!--
+<a href="#" class="btn btn-info" role="button">Link Button</a>
+<button type="button" class="btn btn-info">Button</button>
+<input type="button" class="btn btn-info" value="Input Button">
+<input type="submit" class="btn btn-info" value="Submit Button">
+-->
+
 
 </body>
 </html>

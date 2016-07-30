@@ -72,6 +72,34 @@ class AssetpoolService
         $this->eventDispatcher->dispatch(AssetpoolEvent::CREATE_ASSET, $event);
         return new JsonResponse($this->assetpoolRepository->getAll());
     }
+    public function tagAsset(Request $request)
+    {
+        $assetid = $request->request->get('assetid', 0);
+        $tagid = $request->request->get('tagid', 0);
+        $assetByTagResponse = $this->getAssetsByTag($tagid);
+        $data = json_decode($assetByTagResponse->getContent(), true);
+        $key = "assetid";
+        $resposemessage = "{ assed is already tagged with the tag you put in. }";
+
+        $tmp = false;
+        // Checks weather the asset already has the tag
+        for($count = count($data); $count > 0; $count--){
+            $tmpdata = $data[$count - 1];
+            if ((array_key_exists($key, $tmpdata) && $assetid == $tmpdata[$key])) {
+                $tmp = true;
+            }
+        }
+
+        if(!$tmp){
+            $this->assetpoolRepository->tagAsset($assetid, $tagid);
+            $resposemessage = "{ success tagged Asset. }";
+        }
+
+
+
+       return new JsonResponse($resposemessage);
+       // return new JsonResponse($this->assetpoolRepository->getAll());
+    }
     /**
      * GET /asset
      *

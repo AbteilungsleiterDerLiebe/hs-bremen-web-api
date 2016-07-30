@@ -23,6 +23,9 @@ class AssetpoolRoutesProvider implements ControllerProviderInterface
          * @SWG\Definition(definition="asset",
          *     @SWG\Property(property="assetname", example="defaultname"),
          *     @SWG\Property(property="path", example="defaultpath"))
+         * @SWG\Definition(definition="tagasset",
+         *     @SWG\Property(property="assetid", example= 1),
+         *     @SWG\Property(property="tagid", example= 1))
          * @SWG\Tag.php(name="asset", description="All about assets")
          * @SWG\Tag.php(name="tags", description="All about tags")
          */
@@ -55,6 +58,15 @@ class AssetpoolRoutesProvider implements ControllerProviderInterface
          * )
          */
         $controllers->Post('/createasset/', 'service.asset:createAsset');
+        /**
+         * @SWG\Post(
+         *     path="/asset/tagasset/",
+         *     tags={"asset"},
+         *     @SWG\Parameter(name="json", in="body", @SWG\Schema(ref="#/definitions/tagasset")),
+         *     @SWG\Response(response="201", description="An example resource")
+         * )
+         */
+        $controllers->Post('/tagasset/', 'service.asset:tagAsset');
         /** @SWG\Get(
          *     path="/asset/tags/",
          *     tags={"tags"},

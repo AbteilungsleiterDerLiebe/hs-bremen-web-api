@@ -63,6 +63,27 @@
                 }
             }
         },
+        "/asset/tagasset/": {
+            "post": {
+                "tags": [
+                    "asset"
+                ],
+                "parameters": [
+                    {
+                        "name": "json",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/tagasset"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "An example resource"
+                    }
+                }
+            }
+        },
         "/asset/tags/": {
             "get": {
                 "tags": [
@@ -103,6 +124,18 @@
                 },
                 "path": {
                     "example": "defaultpath"
+                }
+            }
+        },
+        "tagasset": {
+            "properties": {
+                "assetid": {
+                    "type": "integer",
+                    "format": "int11",
+                    "example": 1
+                },
+                "tagid": {
+                    "example": 1
                 }
             }
         },
