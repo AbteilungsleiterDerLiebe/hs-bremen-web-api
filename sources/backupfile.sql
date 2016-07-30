@@ -54,7 +54,7 @@ CREATE TABLE `assetpool` (
   `assetname` varchar(30) NOT NULL,
   `path` varchar(200) NOT NULL,
   PRIMARY KEY (`assetid`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +63,7 @@ CREATE TABLE `assetpool` (
 
 LOCK TABLES `assetpool` WRITE;
 /*!40000 ALTER TABLE `assetpool` DISABLE KEYS */;
-INSERT INTO `assetpool` VALUES (1,'singlehouse1','todo'),(2,'singlehouse2','todo'),(3,'familyhouse1','todo'),(4,'familyhouse2','todo');
+INSERT INTO `assetpool` VALUES (1,'singlehouse1','/houses/singlehouse/'),(2,'singlehouse2','/houses/singlehouse/'),(3,'familyhouse1','/houses/familyhouse/'),(4,'familyhouse2','/houses/familyhouse/'),(25,'defaultname','defaultpath'),(26,'asd','asdqwq'),(27,'123123123123','1231231231231'),(28,'3123','3gsd');
 /*!40000 ALTER TABLE `assetpool` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -124,4 +124,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-07-28 14:50:18
+-- Dump completed on 2016-07-30 10:20:56
