@@ -21,6 +21,7 @@ Datenbank initialisieren:
 URLs:
 - Index (frontend): web-api.vm
 - Swagger UI: web-api.vm/docs/swagger
+- PHPUnit: http://web-api.vm/unittest
 
 ## Benötigte Software
 - [Git](https://git-scm.com/) (Quellcodeverwaltung)
