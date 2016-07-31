@@ -4,6 +4,11 @@
 
 - Die Assetpool-API dient dazu, 'Assets' bzw. Referenzen aus diese in eine Datenbank einzuordnen und zu Taggen. Wobei hier nur Beispieldaten in der Datenbank abgelegt sind.
 
+## Team
+
+- Niklas Hinte
+- Mehmet Barutcu
+
 ## Projekt aufsetzen
 
 Grundlegende Struktur:
