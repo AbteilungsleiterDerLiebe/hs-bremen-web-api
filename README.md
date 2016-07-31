@@ -6,8 +6,8 @@
 
 ## Team
 
-- Niklas Hinte
-- Mehmet Barutcu
+- Niklas Hinte 382635
+- Mehmet Barutcu 345246
 
 ## Projekt aufsetzen
 
